@@ -40,5 +40,17 @@
             <param name="discontinued"></param>
             <returns></returns>
         </member>
+        <member name="T:YungChingExam.Controllers.ShareController">
+            <summary>
+            Share Relate API
+            </summary>
+        </member>
+        <member name="M:YungChingExam.Controllers.ShareController.GetShipperList">
+            <summary>
+            Get Shipper List
+            </summary>
+            <param name="discontinued"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

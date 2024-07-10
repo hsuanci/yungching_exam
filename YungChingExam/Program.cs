@@ -76,6 +76,8 @@ builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<ICustomerService, CustomerService>();
 builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
+builder.Services.AddTransient<IShareService, ShareService>();
+builder.Services.AddTransient<IShipperRepository, ShipperRepository>();
 #endregion
 
 #region JWT
