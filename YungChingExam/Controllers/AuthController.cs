@@ -13,12 +13,12 @@ namespace YungChingExam.Controllers
     [Route("[controller]")]
     public class AuthController : BaseController
     {
-        private readonly ILogger<OrderController> _logger;
+        private readonly ILogger<AuthController> _logger;
         private readonly JWTHelper _jWTHelper;
         private readonly IAuthService _authService;
 
         public AuthController(
-            ILogger<OrderController> logger,
+            ILogger<AuthController> logger,
             JWTHelper jWTHelper,
             IAuthService authService)
         {
