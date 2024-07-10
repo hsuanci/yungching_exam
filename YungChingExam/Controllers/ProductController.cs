@@ -32,7 +32,7 @@ namespace YungChingExam.Controllers
         /// <param name="discontinued"></param>
         /// <returns></returns>
         [HttpGet]
-        [ProducesResponseType(typeof(ProductViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<ProductViewModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> GetProducts([FromQuery] bool discontinued = false)
