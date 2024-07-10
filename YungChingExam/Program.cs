@@ -72,6 +72,8 @@ builder.Services.AddDbContext<YungChingContext>(options =>
 builder.Services.AddSingleton<JWTHelper>();
 builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<IProductRepository, ProductRepository>();
 #endregion
 
 #region JWT

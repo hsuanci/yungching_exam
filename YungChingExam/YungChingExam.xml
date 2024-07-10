@@ -16,5 +16,17 @@
             <param name="vm"></param>
             <returns></returns>
         </member>
+        <member name="T:YungChingExam.Controllers.ProductController">
+            <summary>
+            Product Relate API
+            </summary>
+        </member>
+        <member name="M:YungChingExam.Controllers.ProductController.GetProducts(System.Boolean)">
+            <summary>
+            Get Product List
+            </summary>
+            <param name="discontinued"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>
