@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>YungChingExam</name>
+    </assembly>
+    <members>
+        <member name="T:YungChingExam.Controllers.AuthController">
+            <summary>
+            Auth Relate API
+            </summary>
+        </member>
+        <member name="M:YungChingExam.Controllers.AuthController.Login(YungChingExam.ViewModel.LoginViewModel)">
+            <summary>
+            Login Auth and Get JWT Token
+            </summary>
+            <param name="vm"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

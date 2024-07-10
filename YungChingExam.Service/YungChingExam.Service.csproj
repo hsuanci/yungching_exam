@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\YungChingExam.Data\YungChingExam.Data.csproj" />
+    <ProjectReference Include="..\YungChingExam.Repository\YungChingExam.Repository.csproj" />
+  </ItemGroup>
+
 </Project>

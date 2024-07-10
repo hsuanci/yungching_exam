@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YungChingExam", ".\YungChingExam\YungChingExam.csproj", "{863430A4-DEBD-48C0-B5DD-C0B9681535B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YungChingExam", "YungChingExam\YungChingExam.csproj", "{863430A4-DEBD-48C0-B5DD-C0B9681535B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YungChingExam.Data", ".\YungChingExam.Data\YungChingExam.Data.csproj", "{B6DF691A-C6F8-4F0C-96F7-A31C7325CB8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YungChingExam.Data", "YungChingExam.Data\YungChingExam.Data.csproj", "{B6DF691A-C6F8-4F0C-96F7-A31C7325CB8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YungChingExam.Service", "YungChingExam.Service\YungChingExam.Service.csproj", "{D1145604-2D75-4D64-84B7-3D8204D591F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YungChingExam.Repository", "YungChingExam.Repository\YungChingExam.Repository.csproj", "{006DBC96-5B28-45F6-A042-B225B7FA65A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{B6DF691A-C6F8-4F0C-96F7-A31C7325CB8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6DF691A-C6F8-4F0C-96F7-A31C7325CB8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6DF691A-C6F8-4F0C-96F7-A31C7325CB8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1145604-2D75-4D64-84B7-3D8204D591F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1145604-2D75-4D64-84B7-3D8204D591F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1145604-2D75-4D64-84B7-3D8204D591F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1145604-2D75-4D64-84B7-3D8204D591F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{006DBC96-5B28-45F6-A042-B225B7FA65A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{006DBC96-5B28-45F6-A042-B225B7FA65A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{006DBC96-5B28-45F6-A042-B225B7FA65A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{006DBC96-5B28-45F6-A042-B225B7FA65A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
