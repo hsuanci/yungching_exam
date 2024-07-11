@@ -14,7 +14,7 @@ namespace YungChingExam.Service.services
             _productRepository = productRepository;
         }
 
-        public async Task<List<ProductDto>> GetProductList(bool? discontinued = false)
+        public async Task<List<ProductDto>> GetProductListAsync(bool? discontinued = false)
         {
             return await _productRepository.GetProductsQuery()
                 .Where(x => x.Discontinued == discontinued)

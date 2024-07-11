@@ -9,20 +9,16 @@ namespace YungChingExam.Controllers
     /// Customer Relate API
     /// </summary>
     [ApiController]
-    [Route("[controller]")]
-    public class CustomerController : BaseController
+    public class CustomerController : BaseAPIController
     {
         private readonly ILogger<CustomerController> _logger;
-        private readonly JWTHelper _jWTHelper;
         private readonly ICustomerService _customerService;
 
         public CustomerController(
             ILogger<CustomerController> logger,
-            JWTHelper jWTHelper,
             ICustomerService customerService)
         {
             _logger = logger;
-            _jWTHelper = jWTHelper;
             _customerService = customerService;
         }
 
@@ -37,7 +33,7 @@ namespace YungChingExam.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> GetCustomers()
         {
-            var result = await _customerService.GetCustomerList();
+            var result = await _customerService.GetCustomerListAsync();
 
             if (!result.Any())
             {

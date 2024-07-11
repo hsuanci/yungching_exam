@@ -4,6 +4,6 @@ namespace YungChingExam.Service.interfaces
 {
     public interface IShareService
     {
-        Task<List<ShipperDto>> GetShipperList();
+        Task<List<ShipperDto>> GetShipperListAsync();
     }
 }

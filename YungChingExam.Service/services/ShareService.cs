@@ -14,7 +14,7 @@ namespace YungChingExam.Service.services
             _shipperRepository = shipperRepository;
         }
 
-        public async Task<List<ShipperDto>> GetShipperList()
+        public async Task<List<ShipperDto>> GetShipperListAsync()
         {
             return await _shipperRepository.GetShippersQuery()
                 .AsNoTracking()

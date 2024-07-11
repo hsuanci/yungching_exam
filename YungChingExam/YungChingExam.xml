@@ -9,7 +9,7 @@
             Auth Relate API
             </summary>
         </member>
-        <member name="M:YungChingExam.Controllers.AuthController.Login(YungChingExam.ViewModel.LoginViewModel)">
+        <member name="M:YungChingExam.Controllers.AuthController.PostLogin(YungChingExam.ViewModel.LoginViewModel)">
             <summary>
             Login Auth and Get JWT Token
             </summary>
@@ -26,6 +26,43 @@
             Get Customer List
             </summary>
             <param name="discontinued"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YungChingExam.Controllers.OrderController.GetOrderById(System.Int32)">
+            <summary>
+            Get a single Order by ID
+            </summary>
+            <param name="orderId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YungChingExam.Controllers.OrderController.GetOrders(System.Int32,System.Int32)">
+            <summary>
+            Get Orders
+            </summary>
+            <param name="pageNumber"></param>
+            <param name="pageSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YungChingExam.Controllers.OrderController.PostOrder(YungChingExam.ViewModel.OrderViewModel)">
+            <summary>
+            Create Order
+            </summary>
+            <param name="vm">OrderCreateViewModel</param>
+            <returns></returns>
+        </member>
+        <member name="M:YungChingExam.Controllers.OrderController.PutOrder(System.Int32,YungChingExam.ViewModel.OrderViewModel)">
+            <summary>
+            Update Order
+            </summary>
+            <param name="orderId"></param>
+            <param name="vm"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YungChingExam.Controllers.OrderController.DeleteOrder(System.Int32)">
+            <summary>
+            Delete Order
+            </summary>
+            <param name="orderId"></param>
             <returns></returns>
         </member>
         <member name="T:YungChingExam.Controllers.ProductController">
@@ -50,6 +87,12 @@
             Get Shipper List
             </summary>
             <param name="discontinued"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YungChingExam.Helpers.TimeHelper.GetCurrentDateTime">
+            <summary>
+            Get Server Current UTC DateTime
+            </summary>
             <returns></returns>
         </member>
     </members>

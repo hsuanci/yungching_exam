@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace YungChingExam.Controllers
 {
     [Authorize]
-    [ApiController]
-    public abstract class BaseController : ControllerBase
+    [Route("api/[controller]")]
+    public abstract class BaseAPIController : ControllerBase
     {
     }
 }

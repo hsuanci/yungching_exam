@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using YungChingExam.Helpers;
 using YungChingExam.Service.interfaces;
 using YungChingExam.ViewModel;
 
@@ -9,20 +8,16 @@ namespace YungChingExam.Controllers
     /// Share Relate API
     /// </summary>
     [ApiController]
-    [Route("[controller]")]
-    public class ShareController : BaseController
+    public class ShareController : BaseAPIController
     {
         private readonly ILogger<ShareController> _logger;
-        private readonly JWTHelper _jWTHelper;
         private readonly IShareService _shareService;
 
         public ShareController(
             ILogger<ShareController> logger,
-            JWTHelper jWTHelper,
             IShareService shareService)
         {
             _logger = logger;
-            _jWTHelper = jWTHelper;
             _shareService = shareService;
         }
 
@@ -37,7 +32,7 @@ namespace YungChingExam.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> GetShipperList()
         {
-            var result = await _shareService.GetShipperList();
+            var result = await _shareService.GetShipperListAsync();
 
             if (!result.Any())
             {
