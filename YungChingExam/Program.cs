@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using YungChingExam.Data.Models;
 using YungChingExam.Helpers;
+using YungChingExam.Middlewares;
 using YungChingExam.Repository.interfaces;
 using YungChingExam.Repository.repositories;
 using YungChingExam.Service.interfaces;
@@ -117,6 +118,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();

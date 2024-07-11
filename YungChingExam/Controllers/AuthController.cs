@@ -51,5 +51,19 @@ namespace YungChingExam.Controllers
                 Token = token,
             });
         }
+
+        /// <summary>
+        /// for test global handle ecept
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        [AllowAnonymous]
+        [HttpGet("Except")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetExcept()
+        {
+            throw new Exception("Excpet Test");
+            return Ok();
+        }
     }
 }

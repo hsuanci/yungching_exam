@@ -16,6 +16,13 @@
             <param name="vm"></param>
             <returns></returns>
         </member>
+        <member name="M:YungChingExam.Controllers.AuthController.GetExcept">
+            <summary>
+            for test global handle ecept
+            </summary>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
         <member name="T:YungChingExam.Controllers.CustomerController">
             <summary>
             Customer Relate API
@@ -93,6 +100,13 @@
             <summary>
             Get Server Current UTC DateTime
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:YungChingExam.Middlewares.ExceptionMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            任務調用
+            </summary>
+            <param name="context">HTTP 的上下文</param>
             <returns></returns>
         </member>
     </members>
