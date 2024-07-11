@@ -14,13 +14,12 @@ namespace YungChingExam.Repository.repositories
             _yungChingContext = yungChingContext;
         }
 
-        public IQueryable<Order> GetOrderQuery(int orderId)
+        public IQueryable<Order> GetOrderQuery()
         {
             return _yungChingContext.Orders
                     .Include(x => x.OrderDetails)
                         .ThenInclude(x => x.Product)
-                   .AsNoTracking()
-                   .Where(x => x.OrderId == orderId);
+                   .AsNoTracking();
         }
 
         public async Task AddAsync(OrderDto orderDto)

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Runtime.InteropServices;
 using YungChingExam.Data.DTOs;
 using YungChingExam.Data.Models;
 using YungChingExam.Repository.interfaces;
@@ -24,6 +23,58 @@ namespace YungChingExam.Service.services
             _productRepository = productRepository;
             _customerRepository = customerRepository;
             _yungChingContext = yungChingContext;
+        }
+
+        public async Task<OrderPaginationDto> GetOrderListAsync(int pageNumber, int pageSize)
+        {
+            var totalCount = await _orderRepository
+                             .GetOrderQuery()
+                             .CountAsync();
+
+            var orderList = await _orderRepository
+                .GetOrderQuery()
+                .Include(x => x.Customer)
+                .Include(x => x.Employee)
+                .Include(x => x.ShipViaNavigation)
+                .OrderByDescending(x => x.OrderDate)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(order => new OrderDto
+                {
+                    CustomerId = order.CustomerId,
+                    CustomerName = order.Customer.ContactName,
+                    EmployeeId = order.EmployeeId,
+                    EmployeeName = order.Employee.FirstName + " " + order.Employee.LastName,
+                    OrderDate = order.OrderDate,
+                    RequiredDate = order.RequiredDate,
+                    ShippedDate = order.ShippedDate,
+                    ShipperCompanyName = order.ShipViaNavigation.CompanyName,
+                    ShipVia = order.ShipVia,
+                    Freight = order.Freight,
+                    ShipName = order.ShipName,
+                    ShipAddress = order.ShipAddress,
+                    ShipCity = order.ShipCity,
+                    ShipRegion = order.ShipRegion,
+                    ShipPostalCode = order.ShipPostalCode,
+                    ShipCountry = order.ShipCountry,
+                    OrderDetails = order.OrderDetails.Select(detail => new OrderDetailDto
+                    {
+                        ProductId = detail.ProductId,
+                        ProductName = detail.Product.ProductName,
+                        UnitPrice = detail.UnitPrice,
+                        Quantity = detail.Quantity,
+                        Discount = detail.Discount
+                    }).ToList()
+                })
+                .ToListAsync();
+
+            return new OrderPaginationDto
+            {
+                Orders = orderList,
+                TotalCount = totalCount,
+                PageSize = pageSize,
+                PageNumber = pageNumber
+            };
         }
 
         public async Task CreateOrderAsync(OrderDto dto, bool useCustomerCurrentAddressState)
@@ -114,8 +165,8 @@ namespace YungChingExam.Service.services
 
                     // 更新庫存
                     var order = await _orderRepository
-                        .GetOrderQuery(orderId)
-                        .FirstAsync();
+                        .GetOrderQuery()
+                        .FirstAsync(x => x.OrderId == orderId);
 
                     this.RecoverProductInStock(products, order.OrderDetails.ToList());
 
@@ -135,7 +186,6 @@ namespace YungChingExam.Service.services
             }
         }
 
-
         public async Task DeleteOrderAsync(int orderId)
         {
             using (var transaction = await _yungChingContext.Database.BeginTransactionAsync())
@@ -143,8 +193,8 @@ namespace YungChingExam.Service.services
                 try
                 {
                     var order = await _orderRepository
-                      .GetOrderQuery(orderId)
-                      .FirstAsync();
+                      .GetOrderQuery()
+                      .FirstAsync(x => x.OrderId == orderId);
 
                     var products = await _productRepository
                         .GetProductsQuery()

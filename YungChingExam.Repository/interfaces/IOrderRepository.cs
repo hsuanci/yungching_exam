@@ -5,7 +5,7 @@ namespace YungChingExam.Repository.interfaces
 {
     public interface IOrderRepository
     {
-        IQueryable<Order> GetOrderQuery(int orderId);
+        IQueryable<Order> GetOrderQuery();
         Task AddAsync(OrderDto orderDto);
         Task UpdateAsync(int orderId, OrderDto orderDto);
         Task DeleteAsync(int orderId);

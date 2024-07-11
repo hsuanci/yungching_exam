@@ -23,6 +23,22 @@ namespace YungChingExam.Controllers
         }
 
         /// <summary>
+        /// Get Orders
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(OrderPaginationDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> GetOrders([FromQuery] int pageNumber, [FromQuery] int pageSize)
+        {
+            var orderPaginationDto = await _orderService.GetOrderListAsync(pageNumber, pageSize);
+
+            return Ok(this.MapToOrderPageViewModel(orderPaginationDto));
+        }
+
+        /// <summary>
         /// Create Order
         /// </summary>
         /// <param name="vm">OrderCreateViewModel</param>
@@ -136,5 +152,44 @@ namespace YungChingExam.Controllers
 
             return Ok();
         }
+
+        #region Private
+        private OrderPaginationViewModel MapToOrderPageViewModel(OrderPaginationDto dto)
+        {
+            return new OrderPaginationViewModel
+            {
+                Orders = dto.Orders.Select(order => new OrderPageViewModel
+                {
+                    CustomerId = order.CustomerId,
+                    CustomerName = order.CustomerName,
+                    EmployeeId = order.EmployeeId,
+                    EmployeeName = order.EmployeeName,
+                    OrderDate = order.OrderDate,
+                    RequiredDate = order.RequiredDate,
+                    ShippedDate = order.ShippedDate,
+                    ShipVia = order.ShipVia,
+                    ShipperCompanyName = order.ShipperCompanyName,
+                    Freight = order.Freight,
+                    ShipName = order.ShipName,
+                    ShipAddress = order.ShipAddress,
+                    ShipCity = order.ShipCity,
+                    ShipRegion = order.ShipRegion,
+                    ShipPostalCode = order.ShipPostalCode,
+                    ShipCountry = order.ShipCountry,
+                    OrderDetails = order.OrderDetails.Select(detail => new OrderDetailPageViewModel
+                    {
+                        ProductId = detail.ProductId,
+                        ProductName = detail.ProductName,
+                        UnitPrice = detail.UnitPrice,
+                        Quantity = detail.Quantity,
+                        Discount = detail.Discount
+                    }).ToList()
+                }).ToList(),
+                TotalCount = dto.TotalCount,
+                PageSize = dto.PageSize,
+                PageNumber = dto.PageNumber
+            };
+        }
+        #endregion
     }
 }
