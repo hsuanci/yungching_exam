@@ -28,9 +28,9 @@ namespace YungChingExam.Controllers
         /// <param name="vm">OrderCreateViewModel</param>
         /// <returns></returns>
         [HttpPost]
-        [ProducesResponseType(typeof(AuthViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> PostOrder([FromBody] OrderCreateViewModel vm)
+        public async Task<IActionResult> PostOrder([FromBody] OrderViewModel vm)
         {
             // Get EmployeeId from JWT > Helper
             var claimsIdentity = User.Identity as ClaimsIdentity;
@@ -68,6 +68,56 @@ namespace YungChingExam.Controllers
             };
 
             await _orderService.CreateOrderAsync(orderDto, vm.useCustomerCurrentAddressState);
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Update Order
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="vm"></param>
+        /// <returns></returns>
+        [HttpPut("{orderId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> PutOrder([FromRoute] int orderId, [FromBody] OrderViewModel vm)
+        {
+            // Get EmployeeId from JWT > Helper
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            if (claimsIdentity == null)
+            {
+                return Unauthorized();
+            }
+
+            var subClaim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            if (subClaim == null || !int.TryParse(subClaim.Value, out int employeeId))
+            {
+                return BadRequest("Cannot get sub information or sub is not a valid integer");
+            }
+
+            var orderDto = new OrderDto
+            {
+                CustomerId = vm.CustomerId,
+                EmployeeId = employeeId,
+                RequiredDate = TimeHelper.GetCurrentDateTime(),
+                ShipVia = vm.ShipVia,
+                Freight = vm.Freight,
+                ShipName = vm.ShipName,
+                ShipAddress = vm.ShipAddress,
+                ShipCity = vm.ShipCity,
+                ShipRegion = vm.ShipRegion,
+                ShipPostalCode = vm.ShipPostalCode,
+                ShipCountry = vm.ShipCountry,
+                OrderDetails = vm.OrderDetails.Select(od => new OrderDetailDto
+                {
+                    ProductId = od.ProductId,
+                    Quantity = od.Quantity,
+                })
+                .ToList()
+            };
+
+            await _orderService.UpdateOrderAsync(orderId, orderDto, vm.useCustomerCurrentAddressState);
 
             return Ok();
         }

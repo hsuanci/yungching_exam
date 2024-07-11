@@ -1,8 +1,8 @@
 ﻿namespace YungChingExam.ViewModel
 {
-    public class OrderCreateViewModel
+    public class OrderViewModel
     {
-        public string CustomerId { get; set; }
+        public string? CustomerId { get; set; }
         public int? ShipVia { get; set; }
         public decimal? Freight { get; set; }
         public string? ShipName { get; set; }

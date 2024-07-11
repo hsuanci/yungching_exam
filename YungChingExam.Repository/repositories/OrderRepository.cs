@@ -14,6 +14,15 @@ namespace YungChingExam.Repository.repositories
             _yungChingContext = yungChingContext;
         }
 
+        public IQueryable<Order> GetOrderQuery(int orderId)
+        {
+            return _yungChingContext.Orders
+                    .Include(x => x.OrderDetails)
+                        .ThenInclude(x => x.Product)
+                   .AsNoTracking()
+                   .Where(x => x.OrderId == orderId);
+        }
+
         public async Task AddAsync(OrderDto orderDto)
         {
             var order = new Order
@@ -54,9 +63,7 @@ namespace YungChingExam.Repository.repositories
                 throw new Exception("Order not found");
             }
 
-            order.CustomerId = orderDto.CustomerId;
             order.EmployeeId = orderDto.EmployeeId;
-            order.OrderDate = orderDto.OrderDate;
             order.RequiredDate = orderDto.RequiredDate;
             order.ShippedDate = orderDto.ShippedDate;
             order.ShipVia = orderDto.ShipVia;

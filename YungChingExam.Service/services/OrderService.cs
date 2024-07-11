@@ -79,6 +79,61 @@ namespace YungChingExam.Service.services
             }
         }
 
+        public async Task UpdateOrderAsync(int orderId, OrderDto dto, bool useCustomerCurrentAddressState)
+        {
+            using (var transaction = await _yungChingContext.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    // 獲取所有未停產產品的 ProductId 和 UnitPrice
+                    var products = await _productRepository
+                        .GetProductsQuery()
+                        .Where(x => x.UnitPrice != null && !x.Discontinued)
+                        .ToListAsync();
+
+                    // 重新 mapping price and discount
+                    var discount = 0.1f; // 從數據庫中獲取折扣值
+                    dto.OrderDetails = this.MappingProductDiscount(discount, dto.OrderDetails, products.ToDictionary(p => p.ProductId, p => (decimal)p.UnitPrice));
+
+                    // 是否使用 customer address for shipper
+                    if (useCustomerCurrentAddressState)
+                    {
+                        var customerInfo = await _customerRepository
+                            .GetCustomersQuery()
+                            .AsNoTracking()
+                            .FirstAsync(x => x.CustomerId == dto.CustomerId);
+
+                        dto.ShipName = customerInfo.ContactTitle;
+                        dto.ShipAddress = customerInfo.Address;
+                        dto.ShipCity = customerInfo.City;
+                        dto.ShipRegion = customerInfo.Region;
+                        dto.ShipPostalCode = customerInfo.PostalCode;
+                        dto.ShipCountry = customerInfo.Country;
+                    }
+
+                    // 更新庫存
+                    var order = await _orderRepository
+                        .GetOrderQuery(orderId)
+                        .FirstAsync();
+
+                    this.RecoverProductInStock(products, order.OrderDetails.ToList());
+
+                    this.UpdateProductInStock(products, dto.OrderDetails);
+
+                    await _orderRepository.UpdateAsync(orderId, dto);
+
+                    await _yungChingContext.SaveChangesAsync();
+
+                    await transaction.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    throw new Exception("An error occurred during the transaction. See inner exception for details.", ex);
+                }
+            }
+        }
+
         #region private
         private List<OrderDetailDto> MappingProductDiscount(float discount, List<OrderDetailDto> detailDtos, Dictionary<int, decimal> producDic)
         {
@@ -89,6 +144,20 @@ namespace YungChingExam.Service.services
                 UnitPrice = producDic.ContainsKey(x.ProductId) ? producDic[x.ProductId] : 0,
                 Discount = discount,
             }).ToList();
+        }
+
+        private void RecoverProductInStock(List<Product> products, List<OrderDetail> detailDtos)
+        {
+            foreach (var detailDto in detailDtos)
+            {
+                var product = products.FirstOrDefault(x => x.ProductId == detailDto.ProductId);
+
+                if (product == null)
+                    throw new Exception($"Product with ID {detailDto.ProductId} not found");
+
+                // 恢復庫存數量
+                product.UnitsInStock = (short)(product.UnitsInStock + detailDto.Quantity);
+            }
         }
 
         private void UpdateProductInStock(List<Product> products, List<OrderDetailDto> detailDtos)

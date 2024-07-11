@@ -28,11 +28,19 @@
             <param name="discontinued"></param>
             <returns></returns>
         </member>
-        <member name="M:YungChingExam.Controllers.OrderController.PostOrder(YungChingExam.ViewModel.OrderCreateViewModel)">
+        <member name="M:YungChingExam.Controllers.OrderController.PostOrder(YungChingExam.ViewModel.OrderViewModel)">
             <summary>
             Create Order
             </summary>
             <param name="vm">OrderCreateViewModel</param>
+            <returns></returns>
+        </member>
+        <member name="M:YungChingExam.Controllers.OrderController.PutOrder(System.Int32,YungChingExam.ViewModel.OrderViewModel)">
+            <summary>
+            Update Order
+            </summary>
+            <param name="orderId"></param>
+            <param name="vm"></param>
             <returns></returns>
         </member>
         <member name="T:YungChingExam.Controllers.ProductController">
