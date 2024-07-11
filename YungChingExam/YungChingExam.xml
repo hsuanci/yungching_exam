@@ -28,6 +28,13 @@
             <param name="discontinued"></param>
             <returns></returns>
         </member>
+        <member name="M:YungChingExam.Controllers.OrderController.GetOrderById(System.Int32)">
+            <summary>
+            Get a single Order by ID
+            </summary>
+            <param name="orderId"></param>
+            <returns></returns>
+        </member>
         <member name="M:YungChingExam.Controllers.OrderController.GetOrders(System.Int32,System.Int32)">
             <summary>
             Get Orders

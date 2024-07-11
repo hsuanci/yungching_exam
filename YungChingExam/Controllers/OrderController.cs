@@ -23,6 +23,56 @@ namespace YungChingExam.Controllers
         }
 
         /// <summary>
+        /// Get a single Order by ID
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        [HttpGet("{orderId}")]
+        [ProducesResponseType(typeof(OrderPageViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetOrderById(int orderId)
+        {
+            var orderDto = await _orderService.GetOrderByIdAsync(orderId);
+
+            if (orderDto == null)
+            {
+                return NotFound();
+            }
+
+            var orderPageViewModel = new OrderPageViewModel
+            {
+                CustomerId = orderDto.CustomerId,
+                CustomerName = orderDto.CustomerName,
+                EmployeeId = orderDto.EmployeeId,
+                EmployeeName = orderDto.EmployeeName,
+                OrderDate = orderDto.OrderDate,
+                RequiredDate = orderDto.RequiredDate,
+                ShippedDate = orderDto.ShippedDate,
+                ShipVia = orderDto.ShipVia,
+                ShipperCompanyName = orderDto.ShipperCompanyName,
+                Freight = orderDto.Freight,
+                ShipName = orderDto.ShipName,
+                ShipAddress = orderDto.ShipAddress,
+                ShipCity = orderDto.ShipCity,
+                ShipRegion = orderDto.ShipRegion,
+                ShipPostalCode = orderDto.ShipPostalCode,
+                ShipCountry = orderDto.ShipCountry,
+                OrderDetails = orderDto.OrderDetails.Select(detail => new OrderDetailPageViewModel
+                {
+                    ProductId = detail.ProductId,
+                    ProductName = detail.ProductName,
+                    UnitPrice = detail.UnitPrice,
+                    Quantity = detail.Quantity,
+                    Discount = detail.Discount
+                }).ToList()
+            };
+
+            return Ok(orderPageViewModel);
+        }
+
+
+        /// <summary>
         /// Get Orders
         /// </summary>
         /// <param name="pageNumber"></param>
