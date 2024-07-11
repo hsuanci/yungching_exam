@@ -90,13 +90,11 @@ namespace YungChingExam.Repository.repositories
 
         public async Task DeleteAsync(int orderId)
         {
-            var order = await _yungChingContext.Orders.FindAsync(orderId);
+            var order = await _yungChingContext.Orders
+                                 .Include(x => x.OrderDetails)
+                                 .FirstAsync(x => x.OrderId == orderId);
 
-            if (order == null)
-            {
-                throw new Exception("Order not found");
-            }
-
+            _yungChingContext.OrderDetails.RemoveRange(order.OrderDetails);
             _yungChingContext.Orders.Remove(order);
         }
     }

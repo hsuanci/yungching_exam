@@ -121,5 +121,20 @@ namespace YungChingExam.Controllers
 
             return Ok();
         }
+
+        /// <summary>
+        /// Delete Order
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        [HttpDelete("{orderId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> DeleteOrder([FromRoute] int orderId)
+        {
+            await _orderService.DeleteOrderAsync(orderId);
+
+            return Ok();
+        }
     }
 }

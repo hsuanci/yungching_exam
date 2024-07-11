@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices;
 using YungChingExam.Data.DTOs;
 using YungChingExam.Data.Models;
 using YungChingExam.Repository.interfaces;
@@ -121,6 +122,43 @@ namespace YungChingExam.Service.services
                     this.UpdateProductInStock(products, dto.OrderDetails);
 
                     await _orderRepository.UpdateAsync(orderId, dto);
+
+                    await _yungChingContext.SaveChangesAsync();
+
+                    await transaction.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    throw new Exception("An error occurred during the transaction. See inner exception for details.", ex);
+                }
+            }
+        }
+
+
+        public async Task DeleteOrderAsync(int orderId)
+        {
+            using (var transaction = await _yungChingContext.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    var order = await _orderRepository
+                      .GetOrderQuery(orderId)
+                      .FirstAsync();
+
+                    var products = await _productRepository
+                        .GetProductsQuery()
+                        .Where(x => x.UnitPrice != null && !x.Discontinued)
+                        .ToListAsync();
+
+                    // 已出貨無法刪除
+                    if (order.ShippedDate.HasValue)
+                        throw new Exception("This order has already been shipped.");
+
+                    // 還原庫存
+                    this.RecoverProductInStock(products, order.OrderDetails.ToList());
+
+                    await _orderRepository.DeleteAsync(orderId);
 
                     await _yungChingContext.SaveChangesAsync();
 

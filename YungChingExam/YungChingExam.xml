@@ -43,6 +43,13 @@
             <param name="vm"></param>
             <returns></returns>
         </member>
+        <member name="M:YungChingExam.Controllers.OrderController.DeleteOrder(System.Int32)">
+            <summary>
+            Delete Order
+            </summary>
+            <param name="orderId"></param>
+            <returns></returns>
+        </member>
         <member name="T:YungChingExam.Controllers.ProductController">
             <summary>
             Product Relate API
