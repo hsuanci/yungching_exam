@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using YungChingExam.Helpers;
 using YungChingExam.Service.interfaces;
 using YungChingExam.ViewModel;
 
@@ -9,20 +8,16 @@ namespace YungChingExam.Controllers
     /// Product Relate API
     /// </summary>
     [ApiController]
-    [Route("[controller]")]
-    public class ProductController : BaseController
+    public class ProductController : BaseAPIController
     {
         private readonly ILogger<ProductController> _logger;
-        private readonly JWTHelper _jWTHelper;
         private readonly IProductService _productService;
 
         public ProductController(
             ILogger<ProductController> logger,
-            JWTHelper jWTHelper,
             IProductService productService)
         {
             _logger = logger;
-            _jWTHelper = jWTHelper;
             _productService = productService;
         }
 
@@ -37,7 +32,7 @@ namespace YungChingExam.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> GetProducts([FromQuery] bool discontinued = false)
         {
-            var result = await _productService.GetProductList(discontinued);
+            var result = await _productService.GetProductListAsync(discontinued);
 
             if (!result.Any())
             {

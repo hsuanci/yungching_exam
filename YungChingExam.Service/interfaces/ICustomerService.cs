@@ -4,6 +4,6 @@ namespace YungChingExam.Service.interfaces
 {
     public interface ICustomerService
     {
-        Task<List<CustomerDto>> GetCustomerList();
+        Task<List<CustomerDto>> GetCustomerListAsync();
     }
 }

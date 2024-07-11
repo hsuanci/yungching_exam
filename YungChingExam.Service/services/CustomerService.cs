@@ -14,7 +14,7 @@ namespace YungChingExam.Service.services
             _customerRepository = customerRepository;
         }
 
-        public async Task<List<CustomerDto>> GetCustomerList()
+        public async Task<List<CustomerDto>> GetCustomerListAsync()
         {
             return await _customerRepository.GetCustomersQuery()
                            .AsNoTracking()

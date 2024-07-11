@@ -10,8 +10,7 @@ namespace YungChingExam.Controllers
     /// Auth Relate API
     /// </summary>
     [ApiController]
-    [Route("[controller]")]
-    public class AuthController : BaseController
+    public class AuthController : BaseAPIController
     {
         private readonly ILogger<AuthController> _logger;
         private readonly JWTHelper _jWTHelper;
@@ -36,7 +35,7 @@ namespace YungChingExam.Controllers
         [HttpPost("login")]
         [ProducesResponseType(typeof(AuthViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> Login([FromBody] LoginViewModel vm)
+        public async Task<IActionResult> PostLogin([FromBody] LoginViewModel vm)
         {
             var result = await _authService.AuthenticateEmployeeAsync(vm.Account, vm.Password);
 
