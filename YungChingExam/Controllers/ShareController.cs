@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using YungChingExam.Data.DTOs;
 using YungChingExam.Service.interfaces;
 using YungChingExam.ViewModel;
 
@@ -47,6 +49,20 @@ namespace YungChingExam.Controllers
             });
 
             return Ok(shipperViewModels);
+        }
+
+        /// <summary>
+        /// DI Life Cycle
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet("DIExample")]
+        [ProducesResponseType(typeof(DILifeCycleDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> GetInstanceHash()
+        {
+            return Ok(_shareService.GetInstanceHashCode());
         }
     }
 }

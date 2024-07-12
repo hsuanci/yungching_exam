@@ -9,9 +9,11 @@ namespace YungChingExam.Service.services
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-        public ProductService(IProductRepository productRepository)
+        private readonly IShipperRepository _shipperRepository;
+        public ProductService(IProductRepository productRepository, IShipperRepository shipperRepository)
         {
             _productRepository = productRepository;
+            _shipperRepository = shipperRepository;
         }
 
         public async Task<List<ProductDto>> GetProductListAsync(bool? discontinued = false)
@@ -29,6 +31,11 @@ namespace YungChingExam.Service.services
                     UnitsOnOrder = x.UnitsOnOrder
                 })
                 .ToListAsync();
+        }
+
+        public int GetShipperRepositoryHash()
+        {
+            return _shipperRepository.GetHashCode();
         }
     }
 }

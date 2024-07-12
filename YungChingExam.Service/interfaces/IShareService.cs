@@ -5,5 +5,6 @@ namespace YungChingExam.Service.interfaces
     public interface IShareService
     {
         Task<List<ShipperDto>> GetShipperListAsync();
+        DILifeCycleDto GetInstanceHashCode();
     }
 }

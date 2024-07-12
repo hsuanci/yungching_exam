@@ -9,9 +9,12 @@ namespace YungChingExam.Service.services
     public class ShareService : IShareService
     {
         private readonly IShipperRepository _shipperRepository;
-        public ShareService(IShipperRepository shipperRepository)
+        private readonly IProductService _productService;
+
+        public ShareService(IShipperRepository shipperRepository, IProductService productService)
         {
             _shipperRepository = shipperRepository;
+            _productService = productService;
         }
 
         public async Task<List<ShipperDto>> GetShipperListAsync()
@@ -26,6 +29,15 @@ namespace YungChingExam.Service.services
 
                 })
                 .ToListAsync();
+        }
+
+        public DILifeCycleDto GetInstanceHashCode()
+        {
+            return new DILifeCycleDto
+            {
+                InstaceOneHash = _productService.GetShipperRepositoryHash(),
+                InstaceTwoHash = _shipperRepository.GetHashCode(),
+            };
         }
     }
 }

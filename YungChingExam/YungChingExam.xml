@@ -96,6 +96,12 @@
             <param name="discontinued"></param>
             <returns></returns>
         </member>
+        <member name="M:YungChingExam.Controllers.ShareController.GetInstanceHash">
+            <summary>
+            DI Life Cycle
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:YungChingExam.Helpers.TimeHelper.GetCurrentDateTime">
             <summary>
             Get Server Current UTC DateTime
